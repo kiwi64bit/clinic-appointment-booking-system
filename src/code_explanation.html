@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الشرح الشامل لكود مشروع CABS</title>
+  <style>
+    :root {
+      --primary: #0d9488;
+      --primary-dark: #0f766e;
+      --primary-light: #f0fdfa;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.8;
+      font-size: 16px;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    header {
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--primary-dark);
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    h3 {
+      color: var(--text-main);
+      font-size: 1.2rem;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    ul, ol {
+      margin: 0 1.5rem 1.25rem 0;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* Code blocks */
+    pre {
+      background-color: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92rem;
+      margin: 1rem 0 1.5rem;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      background-color: #f1f5f9;
+      color: #0f766e;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      direction: ltr;
+      display: inline-block;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-left: 0.35rem;
+    }
+
+    .badge-teal   { background: #ccfbf1; color: #0f766e; }
+    .badge-blue   { background: #e0f2fe; color: #0369a1; }
+    .badge-green  { background: #d1fae5; color: #047857; }
+    .badge-gray   { background: #f1f5f9; color: #475569; }
+    .badge-red    { background: #ffe4e6; color: #be123c; }
+    .badge-orange { background: #fef3c7; color: #92400e; }
+
+    /* Highlights */
+    .highlight-box {
+      background-color: var(--primary-light);
+      border-right: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      margin: 1.25rem 0;
+    }
+
+    .toc {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .toc-title {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--primary-dark);
+    }
+
+    .toc ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .toc li {
+      margin-bottom: 0.5rem;
+    }
+
+    .toc a {
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-return:hover {
+      background: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="btn-return">
+      &rarr; العودة لتطبيق حجز المواعيد (CABS)
+    </a>
+
+    <header>
+      <h1>الدليل الشامل لشرح كود مشروع CABS</h1>
+      <p class="subtitle">نظام حجز المواعيد الطبية الكامل باستخدام Vanilla HTML, CSS & JavaScript</p>
+    </header>
+
+    <div class="highlight-box">
+      <strong>مقدمة تقنية:</strong> هذا المشروع مبني ليكون تطبيق واجهة أمامية كامل (Pure Front-end) يعمل مباشرة بمجرد فتح <code>index.html</code> في المتصفح بدون أي أدوات بناء (No Build Step) وبدون خادم خلفي (No Backend)، حيث يعتمد على <code>localStorage</code> كقاعدة بيانات محلية، وتشفير كلمات المرور عبر <code>Web Crypto API (SHA-256)</code>.
+    </div>
+
+    <!-- فهرس المحتويات -->
+    <div class="toc">
+      <div class="toc-title">فهرس الأقسام:</div>
+      <ul>
+        <li><a href="#section-1">1. الهيكل العام ومسارات الملفات</a></li>
+        <li><a href="#section-2">2. ملف الواجهة الرئيسي (index.html)</a></li>
+        <li><a href="#section-3">3. ملف التنسيق ونظام التصميم (css/styles.css)</a></li>
+        <li><a href="#section-4">4. نماذج الكائنات (js/models.js)</a></li>
+        <li><a href="#section-5">5. قاعدة البيانات والبيانات التجريبية (js/storage.js)</a></li>
+        <li><a href="#section-6">6. الأمان وتسجيل الدخول والجلسات (js/auth.js)</a></li>
+        <li><a href="#section-7">7. منطق الأعمال وخدمات الحجز (js/services.js)</a></li>
+        <li><a href="#section-8">8. واجهة التنبيهات والنوافذ (js/ui.js)</a></li>
+        <li><a href="#section-9">9. شاشات التطبيق (js/views/)</a></li>
+        <li><a href="#section-10">10. موجه الصفحات وإدارة النظام (js/app.js)</a></li>
+        <li><a href="#section-11">11. ملف الفحص والاختبارات التلقائية (test-acceptance.js)</a></li>
+      </ul>
+    </div>
+
+    <!-- قسم 1 -->
+    <h2 id="section-1">1. الهيكل العام ومسارات الملفات</h2>
+    <p>يتوزع الكود بشكل معياري واحترافي على الملفات التالية:</p>
+    <pre><code>Clinic appointment booking system/
+├── index.html                   # الصفحة الرئيسية وحاوية التطبيق الأساسية (SPA Container)
+├── code_explanation.html        # هذا الملف (الشرح الكامل بصيغة HTML تفاعلية)
+├── css/
+│   └── styles.css               # ملف التصميم الطبي والتجاوب الكامل مع الشاشات
+├── js/
+│   ├── models.js                # أصناف ومخططات الكائنات (Domain Models Classes)
+│   ├── storage.js               # قاعدة بيانات المتصفح وتوليد البيانات الأولية (LocalStorage DB)
+│   ├── auth.js                  # التشفير والجلسات وحماية المسارات (Authentication & Guards)
+│   ├── services.js              # منطق الأعمال (الحجز، منع التعارض، الإلغاء، الجدولة)
+│   ├── ui.js                    # الإشعارات السريعة (Toasts)، النوافذ (Modals)، والشارات (Badges)
+│   ├── views/
+│   │   ├── authView.js          # واجهة الدخول وإنشاء حساب وبطاقات الحسابات التجريبية
+│   │   ├── patientViews.js      # لوحة المريض، تصفح الأطباء، الحجز، وقائمة المواعيد
+│   │   ├── doctorViews.js       # جدول مواعيد الطبيب وتحديث حالة الكشف وإدارة الفترات
+│   │   └── adminViews.js        # إدارة التخصصات، الأطباء، الفترات، وسجلات المرضى
+│   └── app.js                   # موجه الصفحات (SPA Router)، شريط التنقل، وتهيئة التطبيق
+└── test-acceptance.js           # كود الفحص التلقائي لجميع متطلبات النظام الـ 11</code></pre>
+
+    <!-- قسم 2 -->
+    <h2 id="section-2">2. ملف الواجهة الرئيسي (index.html)</h2>
+    <p>يعمل الملف كحاوية لتطبيق الصفحة الواحدة (Single Page Application - SPA):</p>
+    <ul>
+      <li><strong><code>&lt;header id="cabs-header"&gt;</code></strong>: يحتوي على الحاوية <code>#header-container</code> التي يرسم فيها ملف <code>app.js</code> شريط التنقل ديناميكياً بحسب دور المستخدم الحالي (مريض، طبيب، أو مسؤول).</li>
+      <li><strong><code>&lt;main id="main-viewport"&gt;</code></strong>: مساحة العرض الرئيسية التي يتم تفريغها وحقن شاشات التطبيق بداخلها فورياً عند تغيير الرابط (Hash Routing).</li>
+      <li><strong>ترتيب تحميل السكربتات</strong>: تم ترتيب السكربتات لتجنب أي أخطاء في التبعيات:
+        <code>models.js &rarr; storage.js &rarr; auth.js &rarr; services.js &rarr; ui.js &rarr; views/*.js &rarr; app.js</code>.
+      </li>
+    </ul>
+
+    <!-- قسم 3 -->
+    <h2 id="section-3">3. ملف التنسيق ونظام التصميم (css/styles.css)</h2>
+    <p>تم تصميم التطبيق وفق طابع طبي مريح ونظيف (Clean Medical Aesthetic):</p>
+    <ul>
+      <li><strong>لوحة الألوان الأساسية</strong>: درجات الأزرق المخضر (Teal & Blue-Green) مثل <code>#0d9488</code> مع درجات الرمادي المريح للعين.</li>
+      <li><strong>شارات الحالات (Status Badges)</strong>:
+        <span class="badge badge-green">Available</span>
+        <span class="badge badge-blue">Booked</span>
+        <span class="badge badge-gray">Blocked</span>
+        <span class="badge badge-green">Completed</span>
+        <span class="badge badge-red">Cancelled</span>
+        <span class="badge badge-orange">No-Show</span>
+      </li>
+      <li><strong>التجاوب الكامل (Responsive - NFR-02)</strong>: متجاوب من شاشات الجوال (375px) إلى الشاشات الواسعة (1280px+) مع وضع الجداول داخل <code>.table-responsive</code> لضمان عدم حدوث أي شريط تمرير أفقي على مستوى الصفحة.</li>
+      <li><strong>إمكانية الوصول (Accessibility)</strong>: إطار تركيز واضح للمفاتيح عبر <code>:focus-visible</code> وتسميات صريحة لجميع حقول النماذج.</li>
+    </ul>
+
+    <!-- قسم 4 -->
+    <h2 id="section-4">4. نماذج الكائنات (js/models.js)</h2>
+    <p>يحتوي هذا الملف على الكائنات الأساسية (Domain Classes) المطابقة تماماً للمتطلبات:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>اسم الصنف (Class)</th>
+            <th>الحقول الأساسية</th>
+            <th>الوصف</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>User</code></td>
+            <td>id, email, passwordHash, role, createdAt</td>
+            <td>الصنف الأساسي الذي يرث منه المريض والطبيب والمسؤول.</td>
+          </tr>
+          <tr>
+            <td><code>Patient</code></td>
+            <td>fullName, email, phone, dateOfBirth, passwordHash</td>
+            <td>يمثل المريض المسجل في النظام.</td>
+          </tr>
+          <tr>
+            <td><code>Doctor</code></td>
+            <td>name, email, specialtyId, fee, bio, workingDays, consultationHours, active</td>
+            <td>يمثل الطبيب المعالج مع أوقات وساعات الدوام وحالة النشاط.</td>
+          </tr>
+          <tr>
+            <td><code>Administrator</code></td>
+            <td>id, name, email, passwordHash</td>
+            <td>مسؤول النظام لإدارة المستشفى والتخصصات والأطباء.</td>
+          </tr>
+          <tr>
+            <td><code>Specialty</code></td>
+            <td>id, name, description</td>
+            <td>التخصص الطبي (مثل القلب، العظام، الأطفال...).</td>
+          </tr>
+          <tr>
+            <td><code>TimeSlot</code></td>
+            <td>doctorId, date, startTime, endTime, status</td>
+            <td>الفترة الزمنية المحددة للطبيب (Available, Booked, Blocked).</td>
+          </tr>
+          <tr>
+            <td><code>Appointment</code></td>
+            <td>patientId, doctorId, slotId, date, startTime, endTime, status, notes</td>
+            <td>كائن الموعد المحجوز بحالاته (Booked, Cancelled, Completed, No-Show).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 5 -->
+    <h2 id="section-5">5. قاعدة البيانات والبيانات التجريبية (js/storage.js)</h2>
+    <p>يعمل كطبقة قاعدة بيانات كاملة في المتصفح مع حفظ دائم في <code>localStorage</code> تحت المفتاح <code>CABS_DATA</code>:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>اسم الدالة (Function)</th>
+            <th>الوظيفة والشرح التفصيلي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>formatDate(d)</code></td>
+            <td>تحول كائن التاريخ JavaScript <code>Date</code> إلى صيغة نصية قياسية <code>YYYY-MM-DD</code> لتخزينها في المواعيد والفترات.</td>
+          </tr>
+          <tr>
+            <td><code>addDays(d, days)</code></td>
+            <td>تضيف عدداً معيناً من الأيام (موجب أو سالب) على تاريخ محدد وترجع كائن تاريخ جديد (تُستخدم لبناء جدول الـ 14 يوماً القادمة والأيام الماضية).</td>
+          </tr>
+          <tr>
+            <td><code>generateSeedData()</code></td>
+            <td>تولد البيانات الأولية الكاملة: 6 تخصصات، 9 أطباء (2 غير نشطين)، 23 مريضاً، فترات زمنية لـ 14 يوماً قادماً، ومواعيد بجميع الحالات (<code>Booked</code>, <code>Cancelled</code>, <code>Completed</code>, <code>No-Show</code>).</td>
+          </tr>
+          <tr>
+            <td><code>Storage.init()</code></td>
+            <td>تُستدعى عند تحميل الملف؛ تفحص وجود <code>CABS_DATA</code> في المتصفح، وإذا لم يكن موجوداً أو كان تالفاً تستدعي <code>reset()</code> تلقائياً.</td>
+          </tr>
+          <tr>
+            <td><code>Storage.getDB()</code></td>
+            <td>تقرأ قاعدة البيانات من <code>localStorage</code> وتحولها من JSON إلى كائن JavaScript جاهز للاستخدام.</td>
+          </tr>
+          <tr>
+            <td><code>Storage.saveDB(db)</code></td>
+            <td>تحفظ الكائن الكامل لقاعدة البيانات داخل <code>localStorage</code> بصيغة JSON بعد أي تعديل (NFR-03).</td>
+          </tr>
+          <tr>
+            <td><code>Storage.reset()</code></td>
+            <td>تستدعي <code>generateSeedData()</code> وتعيد كتابة قاعدة البيانات الأصلية بالكامل لإلغاء أي تعديلات تجريبية.</td>
+          </tr>
+          <tr>
+            <td><code>Storage.getSpecialties()</code><br><code>getDoctors()</code>, <code>getPatients()</code>,<br><code>getAdministrators()</code>,<br><code>getTimeSlots()</code>, <code>getAppointments()</code></td>
+            <td>دوال قراءة (Getters) تستخرج المصفوفة الخاصة بكل كيان من قاعدة البيانات بأمان (ترجع مصفوفة فارغة إذا لم توجد بيانات).</td>
+          </tr>
+          <tr>
+            <td><code>Storage.findUserByEmail(email)</code></td>
+            <td>تبحث عن البريد الإلكتروني (بدون حساسية لحالة الأحرف) عبر جداول المسؤولين ثم الأطباء ثم المرضى، وترجع الكائن مع دوره <code>{ user, role }</code>.</td>
+          </tr>
+          <tr>
+            <td><code>Storage.findDoctorById(id)</code><br><code>findPatientById(id)</code>,<br><code>findSpecialtyById(id)</code>,<br><code>findTimeSlotById(id)</code>,<br><code>findAppointmentById(id)</code></td>
+            <td>دوال بحث سريعة تسترجع كائناً واحداً محدداً عن طريق المعرّف الفريد الخاص به (<code>id</code>)، أو ترجع <code>null</code> إذا لم يوجد.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 6 -->
+    <h2 id="section-6">6. الأمان وتسجيل الدخول والجلسات (js/auth.js)</h2>
+    <p>يختص هذا الملف بمتطلبات <strong>FR-01, FR-02, FR-03, NFR-04</strong>:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>اسم الدالة (Function)</th>
+            <th>الوظيفة والشرح التفصيلي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>hashPassword(text)</code></td>
+            <td>دالة غير متزامنة (<code>async</code>) تستخدم <code>window.crypto.subtle.digest('SHA-256', ...)</code> لتحويل كلمة المرور إلى بصمة تجزئة سداسية عشرية من 64 حرفاً، مع بديل احتياطي للبيئات المقيدة.</td>
+          </tr>
+          <tr>
+            <td><code>Auth.registerPatient({ fullName, email, phone, dateOfBirth, password })</code></td>
+            <td><strong>(FR-01)</strong> تتحقق من اكتمال جميع الحقول، وصحة صيغة البريد الإلكتروني، وطول كلمة المرور (6 أحرف على الأقل)، وتمنع تكرار البريد الإلكتروني عبر <code>findUserByEmail</code>، ثم تشفر كلمة المرور وتحفظ كائن <code>Patient</code> جديد.</td>
+          </tr>
+          <tr>
+            <td><code>Auth.login(email, password)</code></td>
+            <td><strong>(FR-02)</strong> تتحقق من وجود المستخدم ومطابقة البصمة المشفرة لكلمة المرور، وترفض دخول الأطباء غير النشطين، وعند النجاح تحفظ الجلسة في <code>sessionStorage</code> تحت المفتاح <code>CABS_SESSION</code> وترجع مسار لوحة التحكم المناسبة.</td>
+          </tr>
+          <tr>
+            <td><code>Auth.logout()</code></td>
+            <td><strong>(FR-03)</strong> تمسح الجلسة من <code>sessionStorage</code> وتعيد توجيه المستخدم فوراً إلى صفحة الدخول <code>#login</code>.</td>
+          </tr>
+          <tr>
+            <td><code>Auth.getSession()</code></td>
+            <td>تقرأ بيانات الجلسة الحالية من <code>sessionStorage</code> وترجعها ككائن (أو <code>null</code> إذا لم يكن هناك مستخدم مسجل).</td>
+          </tr>
+          <tr>
+            <td><code>Auth.getCurrentUser()</code></td>
+            <td>تستخدم بيانات الجلسة الحالية لجلب السجل الكامل للمستخدم (مريض أو طبيب أو مسؤول) من قاعدة البيانات.</td>
+          </tr>
+          <tr>
+            <td><code>Auth.getDefaultRouteForRole(role)</code></td>
+            <td>تحدد المسار الافتراضي لكل دور: <code>#patient-dashboard</code> للمريض، <code>#doctor-dashboard</code> للطبيب، و<code>#admin-dashboard</code> للمسؤول.</td>
+          </tr>
+          <tr>
+            <td><code>Auth.guardRoute(routePath)</code></td>
+            <td><strong>(FR-03, NFR-04)</strong> حارس المسارات: يمنع غير المسجلين من دخول أي صفحة محمية، ويمنع المسجلين من دخول صفحات لا تخص دورهم، ويحمي التطبيق عند الضغط على زر الرجوع في المتصفح.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 7 -->
+    <h2 id="section-7">7. منطق الأعمال وخدمات الحجز (js/services.js)</h2>
+    <p>يضم جميع العمليات البرمجية الطبية مفصولة تماماً عن كود واجهات العرض:</p>
+
+    <h3>الدوال المساعدة العامة (Helpers)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>isFutureDateTime(dateStr, timeStr)</code></td>
+            <td>تقارن التاريخ والوقت المعطى بالوقت الحالي (<code>new Date()</code>) وترجع <code>true</code> فقط إذا كان الموعد في المستقبل.</td>
+          </tr>
+          <tr>
+            <td><code>timesOverlap(startA, endA, startB, endB)</code></td>
+            <td>تفحص تداخل فترتين زمنيتين في نفس اليوم باستخدام المعادلة: <code>startA &lt; endB &amp;&amp; startB &lt; endA</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>أ. خدمة الأطباء (DoctorService)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>getActiveDoctors({ specialtyId, search })</code></td>
+            <td><strong>(FR-04)</strong> ترجع الأطباء النشطين فقط (<code>active === true</code>) مع تصفيتهم حسب التخصص وكلمة البحث في الاسم أو السيرة الذاتية.</td>
+          </tr>
+          <tr>
+            <td><code>getDoctorProfile(doctorId)</code></td>
+            <td><strong>(FR-05)</strong> تجلب بيانات الطبيب الكاملة مدمجة مع اسم تخصصه <code>specialtyName</code>.</td>
+          </tr>
+          <tr>
+            <td><code>addDoctor(data)</code></td>
+            <td><strong>(FR-15)</strong> دالة غير متزامنة تتحقق من عدم تكرار البريد، وتشفر كلمة المرور الافتراضية، وتضيف طبيباً جديداً لقاعدة البيانات.</td>
+          </tr>
+          <tr>
+            <td><code>updateDoctor(doctorId, updateData)</code></td>
+            <td><strong>(FR-15)</strong> تحدث بيانات طبيب حالي مع التحقق من فرادة البريد الإلكتروني في حال تغييره.</td>
+          </tr>
+          <tr>
+            <td><code>toggleDoctorStatus(doctorId)</code></td>
+            <td><strong>(FR-15)</strong> تعكس حالة الطبيب بين نشط (<code>true</code>) وغير نشط (<code>false</code>) مع الاحتفاظ بكافة مواعيده التاريخية.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>ب. خدمة التخصصات (SpecialtyService)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>getAll()</code></td>
+            <td>ترجع قائمة جميع التخصصات المسجلة.</td>
+          </tr>
+          <tr>
+            <td><code>addSpecialty({ name, description })</code></td>
+            <td><strong>(FR-14)</strong> تضيف تخصصاً جديداً بعد التأكد من أن الاسم غير فارغ وغير مكرر (بدون حساسية لحالة الأحرف).</td>
+          </tr>
+          <tr>
+            <td><code>updateSpecialty(id, { name, description })</code></td>
+            <td><strong>(FR-14)</strong> تعدل اسم ووصف التخصص مع منع الفراغ أو التكرار مع تخصص آخر.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>ج. خدمة الفترات الزمنية (SlotService)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>getSlotsForDoctor(doctorId, dateStr)</code></td>
+            <td><strong>(FR-06)</strong> تجلب فترات الطبيب في تاريخ محدد مرتبة تصاعدياً حسب وقت البداية <code>startTime</code>.</td>
+          </tr>
+          <tr>
+            <td><code>createSlot({ doctorId, date, startTime, endTime })</code></td>
+            <td><strong>(FR-16)</strong> تنشئ فترة متاحة جديدة للطبيب بعد التحقق من أن وقت النهاية بعد البداية وأنه لا يوجد تداخل مع أي فترة أخرى لنفس الطبيب في نفس اليوم.</td>
+          </tr>
+          <tr>
+            <td><code>toggleBlockSlot(slotId)</code></td>
+            <td><strong>(FR-16)</strong> تحول الفترة بين <code>Available</code> و<code>Blocked</code>، وترفض نهائياً حظر أي فترة حالتها <code>Booked</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>د. خدمة المواعيد ومنع التعارض (AppointmentService)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>validateSlotAvailability(patientId, doctorId, slotId, excludeAppointmentId)</code></td>
+            <td><strong>(FR-08)</strong> قلب النظام لمنع التعارض: تتحقق من أن الفترة موجودة، تتبع الطبيب، حالتها <code>Available</code>، في المستقبل، وأن المريض لا يملك موعداً آخر محجوزاً يتداخل زمنياً معها في نفس اليوم.</td>
+          </tr>
+          <tr>
+            <td><code>bookAppointment({ patientId, doctorId, slotId, notes })</code></td>
+            <td><strong>(FR-07)</strong> تستدعي <code>validateSlotAvailability</code>، وتتحقق من نشاط الطبيب، ثم تحول الفترة إلى <code>Booked</code> وتنشئ كائن <code>Appointment</code> وتحفظه.</td>
+          </tr>
+          <tr>
+            <td><code>cancelAppointment(appointmentId, cancelledByUserId, reason)</code></td>
+            <td><strong>(FR-10)</strong> تلغي موعداً مستقبلياً حالته <code>Booked</code>، وتغيره إلى <code>Cancelled</code> مع إرجاع الفترة الزمنية إلى <code>Available</code>.</td>
+          </tr>
+          <tr>
+            <td><code>rescheduleAppointment(appointmentId, newSlotId)</code></td>
+            <td><strong>(FR-11)</strong> تفحص الفترة الجديدة عبر <code>validateSlotAvailability</code> أولاً؛ إذا نجحت تحرر الفترة القديمة، وتحجز الجديدة، وتحدث بيانات الموعد، وإذا فشلت تبقي الموعد الأصلي كما هو.</td>
+          </tr>
+          <tr>
+            <td><code>updateVisitStatus(appointmentId, doctorId, newStatus, visitNotes)</code></td>
+            <td><strong>(FR-13)</strong> تتيح للطبيب صاحب الموعد فقط إنهاء الزيارة كـ <code>Completed</code> أو <code>No-Show</code> وإرفاق ملاحظات طبية.</td>
+          </tr>
+          <tr>
+            <td><code>getPatientAppointments(patientId)</code></td>
+            <td><strong>(FR-09)</strong> تجمع مواعيد المريض مع أسماء الأطباء والتخصصات وتقسمها إلى مصفوفتي <code>upcoming</code> و<code>past</code>.</td>
+          </tr>
+          <tr>
+            <td><code>getDoctorDailySchedule(doctorId, dateStr)</code></td>
+            <td><strong>(FR-12)</strong> تجلب مواعيد الطبيب ليوم محدد مرتبة بالوقت ومرفقة ببيانات المريض (الاسم، الهاتف، البريد).</td>
+          </tr>
+          <tr>
+            <td><code>getAdminAppointments({ date, doctorId, patientId, status })</code></td>
+            <td><strong>(FR-17)</strong> تجلب كافة المواعيد للمسؤول مع تطبيق الفلاتر الأربعة ودمج بيانات الطبيب والمريض والتخصص.</td>
+          </tr>
+          <tr>
+            <td><code>searchPatients(query)</code></td>
+            <td><strong>(FR-18)</strong> تبحث في قائمة المرضى بالاسم الكامل أو البريد الإلكتروني أو رقم الهاتف.</td>
+          </tr>
+          <tr>
+            <td><code>getPatientRecord(patientId)</code></td>
+            <td><strong>(FR-18)</strong> تجلب الملف الشخصي للمريض مع سجل زياراته الكامل لعرضه في لوحة المسؤول.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 8 -->
+    <h2 id="section-8">8. واجهة التنبيهات والنوافذ (js/ui.js)</h2>
+    <p>يوفر مساعدات واجهة المستخدم التفاعلية السريعة (NFR-01):</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>UI.showToast(message, type, duration)</code></td>
+            <td>تنشئ وتعرض إشعاراً فورياً في زاوية الشاشة بأنواع (<code>success</code>, <code>error</code>, <code>warning</code>, <code>info</code>) مع زر إغلاق واختفاء تلقائي بعد المدة المحددة.</td>
+          </tr>
+          <tr>
+            <td><code>UI.showModal({ title, contentHtml, confirmText, cancelText, onConfirm, onCancel, size })</code></td>
+            <td>تعرض نافذة حوارية منبثقة احترافية تدعم الإغلاق بزر <code>Escape</code> أو النقر خارج النافذة، وتدير حالة زر التأكيد أثناء التنفيذ.</td>
+          </tr>
+          <tr>
+            <td><code>UI.closeModal()</code></td>
+            <td>تغلق النافذة الحوارية النشطة وتعيد تفعيل التمرير في الصفحة.</td>
+          </tr>
+          <tr>
+            <td><code>UI.renderStatusBadge(status)</code></td>
+            <td>ترجع كود HTML لشارة ملونة حسب الحالة (<code>Available</code>, <code>Booked</code>, <code>Blocked</code>, <code>Completed</code>, <code>Cancelled</code>, <code>No-Show</code>, <code>Past</code>, <code>Current</code>).</td>
+          </tr>
+          <tr>
+            <td><code>UI.formatCurrency(amount)</code></td>
+            <td>تنسق الأرقام كعملة مالية (مثل <code>$120.00</code>).</td>
+          </tr>
+          <tr>
+            <td><code>UI.formatDate(dateStr)</code></td>
+            <td>تحول التاريخ النصي <code>YYYY-MM-DD</code> إلى صيغة مقروءة (مثل <code>Wed, Nov 25, 2026</code>).</td>
+          </tr>
+          <tr>
+            <td><code>UI.escapeHtml(str)</code></td>
+            <td>تعقم النصوص المدخلة من المستخدمين قبل عرضها في HTML لمنع ثغرات XSS.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 9 -->
+    <h2 id="section-9">9. شاشات التطبيق (js/views/)</h2>
+
+    <h3>أ. شاشة الدخول والتسجيل (js/views/authView.js)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>AuthView.render(mode)</code></td>
+            <td>ترسم حاوية المصادقة مع تبويبي الدخول وإنشاء الحساب وبطاقات الحسابات التجريبية الجاهزة.</td>
+          </tr>
+          <tr>
+            <td><code>AuthView.renderLoginForm()</code></td>
+            <td>ترجع كود HTML لنموذج تسجيل الدخول (البريد الإلكتروني وكلمة المرور).</td>
+          </tr>
+          <tr>
+            <td><code>AuthView.renderRegisterForm()</code></td>
+            <td>ترجع كود HTML لنموذج تسجيل مريض جديد (الاسم، البريد، الهاتف، تاريخ الميلاد، كلمة المرور).</td>
+          </tr>
+          <tr>
+            <td><code>AuthView.attachEvents(mode)</code></td>
+            <td>تربط مستمعي الأحداث لتبديل التبويبات، إرسال نماذج الدخول والتسجيل، وعرض أخطاء التحقق الفورية.</td>
+          </tr>
+          <tr>
+            <td><code>AuthView.triggerQuickLogin(email, pass)</code></td>
+            <td>تملأ حقول الدخول تلقائياً عند النقر على أي بطاقة ديمو وتنفذ عملية الدخول مباشرة.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>ب. شاشات المريض (js/views/patientViews.js)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>PatientViews.renderDashboard()</code></td>
+            <td>ترسم لوحة تحكم المريض: إحصائيات المواعيد، بطاقة أقرب موعد قادم مع أزرار الإلغاء وإعادة الجدولة، وروابط سريعة.</td>
+          </tr>
+          <tr>
+            <td><code>PatientViews.renderDoctorsList()</code></td>
+            <td><strong>(FR-04)</strong> تعرض شبكة بطاقات الأطباء النشطين مع شريط بحث حي وقائمة تصفية حسب التخصص وحالة فراغ ودية.</td>
+          </tr>
+          <tr>
+            <td><code>PatientViews.renderDoctorProfile(doctorId)</code></td>
+            <td><strong>(FR-05)</strong> تعرض السيرة الذاتية للطبيب، سنوات الخبرة، رسوم الكشف، ساعات وأيام العمل، وزر الانتقال لفحص الفترات.</td>
+          </tr>
+          <tr>
+            <td><code>PatientViews.renderBookingPage(params)</code></td>
+            <td><strong>(FR-06, FR-07, FR-08)</strong> شاشة الحجز التفاعلية: اختيار الطبيب والتاريخ، شبكة أزرار الفترات (مع تعطيل المحجوزة والمغلقة والماضية)، ملخص الحجز، وتنفيذ التأكيد.</td>
+          </tr>
+          <tr>
+            <td><code>PatientViews.renderMyAppointments()</code></td>
+            <td><strong>(FR-09)</strong> تعرض جدول المواعيد مقسماً إلى تبويبي <code>Upcoming</code> و<code>Past Visits</code>.</td>
+          </tr>
+          <tr>
+            <td><code>PatientViews.attachAppointmentActions()</code></td>
+            <td><strong>(FR-10, FR-11)</strong> تربط أزرار الإلغاء (مع نافذة التأكيد) وأزرار إعادة الجدولة (مع نافذة اختيار تاريخ وفترة جديدة وفحص التعارض).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>ج. شاشات الطبيب (js/views/doctorViews.js)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>DoctorViews.renderDashboard()</code></td>
+            <td>ترسم بوابة الطبيب مع تبويبي الجدول اليومي <code>Daily Schedule</code> وإدارة الفترات <code>My Time Slots</code>.</td>
+          </tr>
+          <tr>
+            <td><code>DoctorViews.renderScheduleSection(doctorId, selectedDate)</code></td>
+            <td><strong>(FR-12, FR-13)</strong> تعرض جدول مواعيد الطبيب للتاريخ المختار (اليوم افتراضياً) مع أزرار تحديث الحالة إلى <code>Completed</code> أو <code>No-Show</code> وإضافة الملاحظات.</td>
+          </tr>
+          <tr>
+            <td><code>DoctorViews.renderSlotsSection(doctorId, selectedDate)</code></td>
+            <td><strong>(FR-16)</strong> تعرض فترات الطبيب في اليوم المختار وتتيح إضافة فترة جديدة (بمنع التداخل) أو حظر/فتح الفترات غير المحجوزة.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>د. شاشات المسؤول (js/views/adminViews.js)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>AdminViews.renderDashboard(activeTab)</code></td>
+            <td>ترسم لوحة الإدارة الرئيسية مع التبويبات الخمسة والتبديل بينها.</td>
+          </tr>
+          <tr>
+            <td><code>AdminViews.renderOversightTab()</code></td>
+            <td><strong>(FR-17)</strong> تعرض جدول كافة المواعيد في العيادة مع فلاتر التاريخ والطبيب والمريض والحالة وزر الإلغاء الإداري.</td>
+          </tr>
+          <tr>
+            <td><code>AdminViews.renderDoctorsTab()</code></td>
+            <td><strong>(FR-15)</strong> تعرض سجل الأطباء بالكامل مع نوافذ إضافة طبيب، تعديل بياناته، وتفعيل/إلغاء تفعيل حسابه.</td>
+          </tr>
+          <tr>
+            <td><code>AdminViews.renderSpecialtiesTab()</code></td>
+            <td><strong>(FR-14)</strong> تعرض التخصصات الطبية مع نوافذ الإضافة والتعديل ومنع التكرار أو الفراغ.</td>
+          </tr>
+          <tr>
+            <td><code>AdminViews.renderSlotsTab()</code></td>
+            <td><strong>(FR-16)</strong> تتيح للمسؤول اختيار أي طبيب وتاريخ لإضافة فترات جديدة له أو حظر/فتح فتراته المتاحة.</td>
+          </tr>
+          <tr>
+            <td><code>AdminViews.renderPatientsTab()</code></td>
+            <td><strong>(FR-18)</strong> توفر بحثاً فورياً في سجلات المرضى ونافذة منبثقة لعرض بيانات المريض وتاريخ زياراته بالكامل.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 10 -->
+    <h2 id="section-10">10. موجه الصفحات وإدارة النظام (js/app.js)</h2>
+    <p>يمثل المحرك الرئيسي لتطبيق الصفحة الواحدة (SPA Engine):</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>الدالة</th><th>الشرح</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>parseHash(hashStr)</code></td>
+            <td>تحلل عنوان الـ Hash (مثل <code>#doctor-profile?id=doc_sarah</code>) وتفصل المسار الأساسي عن معاملات الاستعلام (<code>params</code>).</td>
+          </tr>
+          <tr>
+            <td><code>App.init()</code></td>
+            <td>تهيئ قاعدة البيانات وتربط مستمعي أحداث المتصفح (<code>hashchange</code>, <code>pageshow</code>, <code>popstate</code>) ثم تشغل الموجه لأول مرة.</td>
+          </tr>
+          <tr>
+            <td><code>App.renderHeader()</code></td>
+            <td>ترسم شريط التنقل العلوي ديناميكياً حسب حالة تسجيل الدخول ودور المستخدم، وتفعل زر تسجيل الخروج وزر <code>Reset Demo Data</code>.</td>
+          </tr>
+          <tr>
+            <td><code>App.handleRoute()</code></td>
+            <td>تستدعي <code>Auth.guardRoute</code> للتحقق من الصلاحيات، ثم ترسم الهيدر وتوجه العرض إلى الدالة المناسبة للشاشة المطلوبة وتعيد التمرير لأعلى الصفحة.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- قسم 11 -->
+    <h2 id="section-11">11. ملف الفحص والاختبارات التلقائية (test-acceptance.js)</h2>
+    <p>سكربت مخصص للتشغيل عبر Node.js (باستخدام الأمر: <code>node test-acceptance.js</code>) للتحقق آلياً من نجاح متطلبات القبول الـ 11 بالكامل بنجاح 100%.</p>
+
+    <div style="text-align: center; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+      <a href="index.html" class="btn-return">
+        فتح تطبيق CABS الآن &larr;
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>
