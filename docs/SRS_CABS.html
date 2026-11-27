@@ -1,13 +1,10 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-            Software Requirements Specification - Clinic Appointment Booking
-            System
-        </title>
-        <style>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Software Requirements Specification - Clinic Appointment Booking System</title>
+<style>
             :root {
                 --bg: #f6f8f8;
                 --sf: #ffffff;
@@ -30,20 +27,13 @@
                     color-scheme: dark;
                 }
             }
-            * {
-                box-sizing: border-box;
-            }
-            html {
-                scroll-behavior: smooth;
-            }
+            * { box-sizing: border-box; }
+            html { scroll-behavior: smooth; }
             body {
                 margin: 0;
                 background: var(--bg);
                 color: var(--ink);
-                font:
-                    16px/1.65 Georgia,
-                    "Times New Roman",
-                    serif;
+                font: 16px/1.65 Georgia, "Times New Roman", serif;
             }
             .wrap {
                 display: flex;
@@ -61,10 +51,7 @@
                 max-height: 100vh;
                 overflow: auto;
                 padding: 32px 0;
-                font:
-                    14px/1.55 system-ui,
-                    -apple-system,
-                    sans-serif;
+                font: 14px/1.55 system-ui, -apple-system, sans-serif;
             }
             .toc-title {
                 font-size: 11px;
@@ -82,10 +69,7 @@
                 margin: 2px 0;
                 border-left: 2px solid transparent;
                 border-radius: 0 6px 6px 0;
-                transition:
-                    color 0.15s ease,
-                    background-color 0.15s ease,
-                    border-color 0.15s ease;
+                transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
             }
             aside a:hover {
                 color: var(--ink);
@@ -97,1160 +81,243 @@
                 background: var(--tint);
                 border-left-color: var(--brand);
             }
-            main {
-                min-width: 0;
-                flex: 1;
-                padding: 36px 0 84px;
-                max-width: 820px;
-            }
-            h1 {
-                font:
-                    700 34px/1.2 system-ui,
-                    -apple-system,
-                    sans-serif;
-                margin: 0 0 10px;
-            }
-            .meta {
-                font:
-                    14px/1.5 system-ui,
-                    -apple-system,
-                    sans-serif;
-                color: var(--mute);
-                margin: 0 0 14px;
-            }
-            .lead {
-                font-size: 18px;
-                color: var(--mute);
-                margin: 0 0 8px;
-            }
+            main { min-width: 0; flex: 1; padding: 36px 0 84px; max-width: 820px; }
+            h1 { font: 700 34px/1.2 system-ui, -apple-system, sans-serif; margin: 0 0 10px; }
+            .meta { font: 14px/1.5 system-ui, -apple-system, sans-serif; color: var(--mute); margin: 0 0 14px; }
+            .lead { font-size: 18px; color: var(--mute); margin: 0 0 8px; }
             h2 {
-                font:
-                    700 23px/1.3 system-ui,
-                    -apple-system,
-                    sans-serif;
+                font: 700 23px/1.3 system-ui, -apple-system, sans-serif;
                 margin: 44px 0 12px;
                 padding-top: 14px;
                 border-top: 1px solid var(--line);
                 scroll-margin-top: 20px;
             }
-            h3 {
-                font:
-                    700 17px/1.35 system-ui,
-                    -apple-system,
-                    sans-serif;
-                margin: 24px 0 8px;
-                scroll-margin-top: 20px;
-            }
-            p {
-                margin: 10px 0;
-            }
-            ul {
-                margin: 8px 0 14px;
-                padding-left: 22px;
-            }
-            li {
-                margin: 5px 0;
-            }
+            h3 { font: 700 17px/1.35 system-ui, -apple-system, sans-serif; margin: 24px 0 8px; scroll-margin-top: 20px; }
+            p { margin: 10px 0; }
+            ul { margin: 8px 0 14px; padding-left: 22px; }
+            li { margin: 5px 0; }
             a.req-link {
                 color: var(--brand);
                 font-weight: 700;
                 text-decoration: none;
                 border-bottom: 1px dashed var(--brand);
             }
-            a.req-link:hover {
-                border-bottom-style: solid;
-            }
+            a.req-link:hover { border-bottom-style: solid; }
             table {
                 width: 100%;
                 border-collapse: collapse;
-                font:
-                    14.5px/1.45 system-ui,
-                    -apple-system,
-                    sans-serif;
+                font: 14.5px/1.45 system-ui, -apple-system, sans-serif;
                 background: var(--sf);
                 margin: 14px 0;
             }
-            th,
-            td {
-                text-align: left;
-                padding: 9px 11px;
-                border: 1px solid var(--line);
-                vertical-align: top;
-            }
-            th {
-                background: var(--tint);
-                font-weight: 600;
-            }
+            th, td { text-align: left; padding: 9px 11px; border: 1px solid var(--line); vertical-align: top; }
+            th { background: var(--tint); font-weight: 600; }
             code {
-                font:
-                    13.5px ui-monospace,
-                    SFMono-Regular,
-                    Menlo,
-                    Consolas,
-                    monospace;
+                font: 13.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
                 background: var(--tint);
                 padding: 1px 5px;
                 border-radius: 4px;
             }
             @media (max-width: 860px) {
-                aside {
-                    display: none;
-                }
-                .wrap {
-                    padding: 0 16px;
-                }
+                aside { display: none; }
+                .wrap { padding: 0 16px; }
             }
             @media print {
-                aside {
-                    display: none;
-                }
-                body {
-                    background: #fff;
-                    color: #000;
-                }
-                h2 {
-                    break-after: avoid;
-                }
-                table {
-                    break-inside: avoid;
-                }
+                aside { display: none; }
+                body { background: #fff; color: #000; }
+                h2 { break-after: avoid; }
+                table { break-inside: avoid; }
             }
-        </style>
-    </head>
-    <body>
-        <div class="wrap">
-            <aside id="toc" aria-label="Table of contents">
-                <div class="toc-title">On this page</div>
-            </aside>
-            <main>
-                <h1>Software Requirements Specification (SRS)</h1>
-                <p class="meta">
-                    <strong>Project:</strong> Clinic Appointment Booking System
-                    · <strong>Course:</strong> System Analysis and Design 1
-                    (Project 3) · <strong>Version:</strong> 1.0
-                </p>
-                <p class="lead">
-                    Web-based scheduling specification covering patient booking,
-                    doctor schedules, clinic administration, domain rules, and
-                    front-end pages.
-                </p>
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside id="toc" aria-label="Table of contents"><div class="toc-title">On this page</div></aside>
+<main>
+<h1>Software Requirements Specification (SRS)</h1>
+<p class="meta"><strong>Project:</strong> Clinic Appointment Booking System · <strong>Course:</strong> System Analysis and Design 1 (Project 3) · <strong>Version:</strong> 1.1</p>
+<p class="lead">Web-based scheduling specification covering patient booking, doctor schedules, clinic administration, domain rules, and front-end pages.</p>
 
-                <h2>1. Purpose &amp; Scope</h2>
-                <p>
-                    The <strong>Clinic Appointment Booking System</strong> is a
-                    web-based scheduling application that lets patients find
-                    doctors, check open time slots, and book, reschedule, or
-                    cancel clinic visits. Doctors use it to check their daily
-                    schedule, manage their time slots, and record whether
-                    patients attended or missed visits, while administrators
-                    manage medical specialties, doctor profiles, time slots,
-                    patient records, and clinic appointments.
-                </p>
-                <p>
-                    For this System Analysis and Design 1 course project, the
-                    system is built as a front-end web application using browser
-                    storage (such as <code>localStorage</code> or a structured
-                    JSON store in memory) seeded with sample data instead of a
-                    live backend database server.
-                </p>
+<h2>1. Purpose &amp; Scope</h2>
+<p>The <strong>Clinic Appointment Booking System</strong> is a web-based scheduling application that lets patients find doctors, check open time slots, and book, reschedule, or cancel clinic visits. Doctors use it to check their daily schedule, manage their time slots, and record whether patients attended or missed visits, while administrators manage medical specialties, doctor profiles, time slots, patient records, and clinic appointments.</p>
+<p>For this System Analysis and Design 1 course project, the system is built as a front-end web application using browser storage (such as <code>localStorage</code> or a structured JSON store in memory) seeded with sample data instead of a live backend database server.</p>
 
-                <h2>2. User Roles &amp; Permissions</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Role</th>
-                            <th>Summary</th>
-                            <th>Main Responsibilities</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Patient</strong></td>
-                            <td>End-user booking clinic visits</td>
-                            <td>
-                                Create an account, sign in and out, search and
-                                filter doctors by specialty or name, view doctor
-                                profiles and open time slots, book or reschedule
-                                appointments, cancel their own upcoming
-                                appointments, and review upcoming and past
-                                visits.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Doctor</strong></td>
-                            <td>Medical practitioner seeing patients</td>
-                            <td>
-                                Sign in and out, view their assigned
-                                appointments for a day in time order, generate
-                                or block time slots for their schedule, and mark
-                                appointments as <code>Completed</code> or
-                                <code>No-Show</code>.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Administrator</strong></td>
-                            <td>Clinic staff managing setup &amp; records</td>
-                            <td>
-                                Sign in and out, add, edit, or deactivate
-                                specialties and doctors, create or block time
-                                slots, view and search patient records, and view
-                                or cancel any appointment across the clinic.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<h2>2. User Roles &amp; Permissions</h2>
+<table>
+<thead><tr><th>Role</th><th>Summary</th><th>Main Responsibilities</th></tr></thead>
+<tbody>
+<tr><td><strong>Patient</strong></td><td>End-user booking clinic visits</td><td>Create an account, sign in and out, search and filter doctors by specialty or name, view doctor profiles and open time slots, book or reschedule appointments, cancel their own upcoming appointments, and review upcoming and past visits.</td></tr>
+<tr><td><strong>Doctor</strong></td><td>Medical practitioner seeing patients</td><td>Sign in and out, view their assigned appointments for a day in time order, generate or block time slots for their schedule, and mark appointments as <code>Completed</code> or <code>No-Show</code>.</td></tr>
+<tr><td><strong>Administrator</strong></td><td>Clinic staff managing setup &amp; records</td><td>Sign in and out, add, edit, or deactivate specialties and doctors, create or block time slots, view and search patient records, and view or cancel any appointment across the clinic.</td></tr>
+</tbody></table>
 
-                <h3>Permission Matrix</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Action / Area</th>
-                            <th>Patient</th>
-                            <th>Doctor</th>
-                            <th>Administrator</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Register new account</td>
-                            <td>Yes (self-registration)</td>
-                            <td>No (created by Admin)</td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>Log in and log out</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Browse doctors &amp; view profiles</td>
-                            <td>Yes (active doctors)</td>
-                            <td>View own profile</td>
-                            <td>Yes (all doctors, including inactive)</td>
-                        </tr>
-                        <tr>
-                            <td>Book &amp; reschedule appointments</td>
-                            <td>Yes (for self)</td>
-                            <td>No</td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>Cancel appointments</td>
-                            <td>Own upcoming visits only</td>
-                            <td>No</td>
-                            <td>Any clinic appointment</td>
-                        </tr>
-                        <tr>
-                            <td>Manage time slots (open / block)</td>
-                            <td>No</td>
-                            <td>Own time slots</td>
-                            <td>Any doctor's time slots</td>
-                        </tr>
-                        <tr>
-                            <td>Mark visit as Completed / No-Show</td>
-                            <td>No</td>
-                            <td>Own scheduled visits</td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>Manage specialties, doctors &amp; patients</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>Yes</td>
-                        </tr>
-                    </tbody>
-                </table>
+<h3>Permission Matrix</h3>
+<table>
+<thead><tr><th>Action / Area</th><th>Patient</th><th>Doctor</th><th>Administrator</th></tr></thead>
+<tbody>
+<tr><td>Register new account</td><td>Yes (self-registration)</td><td>No (created by Admin)</td><td>No</td></tr>
+<tr><td>Log in and log out</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Browse doctors &amp; view profiles</td><td>Yes (active doctors)</td><td>View own profile</td><td>Yes (all doctors, including inactive)</td></tr>
+<tr><td>Book &amp; reschedule appointments</td><td>Yes (for self)</td><td>No</td><td>No</td></tr>
+<tr><td>Cancel appointments</td><td>Own upcoming visits only</td><td>No</td><td>Any clinic appointment</td></tr>
+<tr><td>Manage time slots (open / block)</td><td>No</td><td>Own time slots</td><td>Any doctor's time slots</td></tr>
+<tr><td>Mark visit as Completed / No-Show</td><td>No</td><td>Own scheduled visits</td><td>No</td></tr>
+<tr><td>Manage specialties, doctors &amp; patients</td><td>No</td><td>No</td><td>Yes</td></tr>
+</tbody></table>
 
-                <h2>3. Functional Requirements Overview</h2>
-                <p>
-                    Click any requirement ID to jump to its full plain-text
-                    specification in Section 4.
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Requirement Name</th>
-                            <th>Who Uses It</th>
-                            <th>What It Does (Plain Language)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-01"
-                                    >FR-01</a
-                                >
-                            </td>
-                            <td><strong>Patient Registration</strong></td>
-                            <td>Visitor / Patient</td>
-                            <td>
-                                Lets a new patient sign up with basic details
-                                while blocking duplicate email addresses.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-02"
-                                    >FR-02</a
-                                >
-                            </td>
-                            <td><strong>Role-Based Login</strong></td>
-                            <td>Patient, Doctor, Admin</td>
-                            <td>
-                                Checks email and password and opens the
-                                dashboard matching the user's role.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-03"
-                                    >FR-03</a
-                                >
-                            </td>
-                            <td><strong>User Logout</strong></td>
-                            <td>Patient, Doctor, Admin</td>
-                            <td>
-                                Signs the current user out, clears the active
-                                session, and returns to the login screen.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-04"
-                                    >FR-04</a
-                                >
-                            </td>
-                            <td>
-                                <strong>Browse &amp; Filter Doctors</strong>
-                            </td>
-                            <td>Patient</td>
-                            <td>
-                                Shows active doctors so a patient can browse or
-                                search by specialty or doctor name.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-05"
-                                    >FR-05</a
-                                >
-                            </td>
-                            <td><strong>View Doctor Profile</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                Displays a doctor's specialty, background, fee,
-                                experience, and consultation hours.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-06"
-                                    >FR-06</a
-                                >
-                            </td>
-                            <td><strong>View Available Time Slots</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                Shows a doctor's slots for a chosen date and
-                                clearly marks whether each slot is open or
-                                taken.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-07"
-                                    >FR-07</a
-                                >
-                            </td>
-                            <td><strong>Book Appointment</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                Saves a confirmed booking for an open slot and
-                                marks that slot as booked.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-08"
-                                    >FR-08</a
-                                >
-                            </td>
-                            <td>
-                                <strong
-                                    >Conflict &amp; Double-Booking
-                                    Prevention</strong
-                                >
-                            </td>
-                            <td>System</td>
-                            <td>
-                                Stops two people from taking the same slot or a
-                                patient from double-booking the same time.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-09"
-                                    >FR-09</a
-                                >
-                            </td>
-                            <td><strong>View Patient Appointments</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                Lists a patient's upcoming and past appointments
-                                with key visit details and status.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-10"
-                                    >FR-10</a
-                                >
-                            </td>
-                            <td><strong>Cancel Appointment</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                Cancels an upcoming booking and frees the time
-                                slot so someone else can book it.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-11"
-                                    >FR-11</a
-                                >
-                            </td>
-                            <td><strong>Reschedule Appointment</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                Moves an existing booking to another open slot
-                                safely without losing the current visit if
-                                blocked.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-12"
-                                    >FR-12</a
-                                >
-                            </td>
-                            <td><strong>View Doctor Daily Schedule</strong></td>
-                            <td>Doctor</td>
-                            <td>
-                                Shows a doctor's appointments for a chosen day
-                                in chronological order from earliest to latest.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-13"
-                                    >FR-13</a
-                                >
-                            </td>
-                            <td>
-                                <strong>Update Appointment Visit Status</strong>
-                            </td>
-                            <td>Doctor</td>
-                            <td>
-                                Lets a doctor record a scheduled visit as
-                                completed or mark that the patient did not show
-                                up.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-14"
-                                    >FR-14</a
-                                >
-                            </td>
-                            <td><strong>Manage Specialties</strong></td>
-                            <td>Administrator</td>
-                            <td>
-                                Lets an administrator add new medical
-                                specialties or update existing ones.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-15"
-                                    >FR-15</a
-                                >
-                            </td>
-                            <td><strong>Manage Doctor Profiles</strong></td>
-                            <td>Administrator</td>
-                            <td>
-                                Lets an administrator add doctors, edit their
-                                details or specialty, or turn off new bookings
-                                for them.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-16"
-                                    >FR-16</a
-                                >
-                            </td>
-                            <td><strong>Manage Doctor Time Slots</strong></td>
-                            <td>Doctor, Administrator</td>
-                            <td>
-                                Lets a doctor or administrator create new time
-                                slots or block slots on specific dates.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-17"
-                                    >FR-17</a
-                                >
-                            </td>
-                            <td>
-                                <strong>Admin Appointment Oversight</strong>
-                            </td>
-                            <td>Administrator</td>
-                            <td>
-                                Lets an administrator view and filter all clinic
-                                appointments and cancel a booking when needed.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-fr-18"
-                                    >FR-18</a
-                                >
-                            </td>
-                            <td>
-                                <strong
-                                    >View &amp; Search Patient Records</strong
-                                >
-                            </td>
-                            <td>Administrator</td>
-                            <td>
-                                Lets an administrator look up registered
-                                patients and view their appointment history.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<h2>3. Functional Requirements Overview</h2>
+<p>Click any requirement ID to jump to its full plain-text specification in Section 4.</p>
+<table>
+<thead><tr><th>ID</th><th>Requirement Name</th><th>Who Uses It</th><th>What It Does (Plain Language)</th></tr></thead>
+<tbody>
+<tr><td><a class="req-link" href="#detail-fr-01">FR-01</a></td><td><strong>Patient Registration</strong></td><td>Visitor / Patient</td><td>Lets a new patient sign up with basic details while blocking duplicate email addresses.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-02">FR-02</a></td><td><strong>Role-Based Login</strong></td><td>Patient, Doctor, Admin</td><td>Checks email and password and opens the dashboard matching the user's role.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-03">FR-03</a></td><td><strong>Browse Doctors &amp; View Profile</strong></td><td>Patient</td><td>Shows active doctors so a patient can search by specialty or name, then open a doctor's profile with specialty, experience, fee, bio, and consultation hours.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-04">FR-04</a></td><td><strong>View Available Time Slots</strong></td><td>Patient</td><td>Shows a doctor's slots for a chosen date and clearly marks whether each slot is open or taken.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-05">FR-05</a></td><td><strong>Book Appointment</strong></td><td>Patient</td><td>Saves a confirmed booking for an open slot and marks that slot as booked.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-06">FR-06</a></td><td><strong>Conflict &amp; Double-Booking Prevention</strong></td><td>System</td><td>Stops two people from taking the same slot or a patient from double-booking the same time.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-07">FR-07</a></td><td><strong>View Patient Appointments</strong></td><td>Patient</td><td>Lists a patient's upcoming and past appointments with key visit details and status.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-08">FR-08</a></td><td><strong>Cancel Appointment</strong></td><td>Patient</td><td>Cancels an upcoming booking and frees the time slot so someone else can book it.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-09">FR-09</a></td><td><strong>Reschedule Appointment</strong></td><td>Patient</td><td>Moves an existing booking to another open slot safely without losing the current visit if blocked.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-10">FR-10</a></td><td><strong>View Doctor Daily Schedule</strong></td><td>Doctor</td><td>Shows a doctor's appointments for a chosen day in chronological order from earliest to latest.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-11">FR-11</a></td><td><strong>Update Appointment Visit Status</strong></td><td>Doctor</td><td>Lets a doctor record a scheduled visit as completed or mark that the patient did not show up.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-12">FR-12</a></td><td><strong>Manage Specialties</strong></td><td>Administrator</td><td>Lets an administrator add new medical specialties or update existing ones.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-13">FR-13</a></td><td><strong>Manage Doctor Profiles</strong></td><td>Administrator</td><td>Lets an administrator add doctors, edit their details or specialty, or turn off new bookings for them.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-14">FR-14</a></td><td><strong>Manage Doctor Time Slots</strong></td><td>Doctor, Administrator</td><td>Lets a doctor or administrator create new time slots or block slots on specific dates.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-15">FR-15</a></td><td><strong>Admin Appointment Oversight</strong></td><td>Administrator</td><td>Lets an administrator view and filter all clinic appointments and cancel a booking when needed.</td></tr>
+<tr><td><a class="req-link" href="#detail-fr-16">FR-16</a></td><td><strong>View &amp; Search Patient Records</strong></td><td>Administrator</td><td>Lets an administrator look up registered patients and view their appointment history.</td></tr>
+</tbody></table>
 
-                <h2>4. Detailed Functional Requirements</h2>
-                <p>
-                    Each subsection below gives the complete plain-text behavior
-                    for one requirement so diagram authors and developers share
-                    the exact same rules.
-                </p>
+<h2>4. Detailed Functional Requirements</h2>
+<p>Each subsection below gives the complete plain-text behavior for one requirement so diagram authors and developers share the exact same rules.</p>
+<h3 id="detail-fr-01">FR-01 — Patient Registration</h3>
+<p>A visitor who does not yet have an account can open the registration form and submit their full name, email address, phone number, date of birth, and password. The system checks that all required fields are filled in and that the email format is valid. It then checks existing patient records to make sure no other account already uses that email address. If the email is already registered, the system rejects the sign-up and shows a clear error message without creating a duplicate account. If the input is valid and the email is unique, the system creates a new <code>Patient</code> record with role <code>Patient</code>, stores the password safely (hashed rather than plain text), saves it to storage, and lets the user sign in.</p>
 
-                <h3 id="detail-fr-01">FR-01 — Patient Registration</h3>
-                <p>
-                    A visitor who does not yet have an account can open the
-                    registration form and submit their full name, email address,
-                    phone number, date of birth, and password. The system checks
-                    that all required fields are filled in and that the email
-                    format is valid. It then checks existing patient records to
-                    make sure no other account already uses that email address.
-                    If the email is already registered, the system rejects the
-                    sign-up and shows a clear error message without creating a
-                    duplicate account. If the input is valid and the email is
-                    unique, the system creates a new <code>Patient</code> record
-                    with role <code>Patient</code>, stores the password safely
-                    (hashed rather than plain text), saves it to storage, and
-                    lets the user sign in.
-                </p>
+<h3 id="detail-fr-02">FR-02 — Role-Based Login</h3>
+<p>Any registered user—whether a <code>Patient</code>, <code>Doctor</code>, or <code>Administrator</code>—can enter their email and password on the <code>Login Page</code>. The system checks the submitted credentials against stored user accounts. If the email is not found or the password does not match, the system denies access and displays an invalid login message. When the credentials match, the system starts an active session for that user and redirects them to their role's home view: the <code>Patient Dashboard</code> for patients, the <code>Doctor Dashboard</code> for doctors, or the <code>Admin Dashboard</code> for administrators.</p>
 
-                <h3 id="detail-fr-02">FR-02 — Role-Based Login</h3>
-                <p>
-                    Any registered user—whether a <code>Patient</code>,
-                    <code>Doctor</code>, or <code>Administrator</code>—can enter
-                    their email and password on the <code>Login Page</code>. The
-                    system checks the submitted credentials against stored user
-                    accounts. If the email is not found or the password does not
-                    match, the system denies access and displays an invalid
-                    login message. When the credentials match, the system starts
-                    an active session for that user and redirects them to their
-                    role's home view: the <code>Patient Dashboard</code> for
-                    patients, the <code>Doctor Dashboard</code> for doctors, or
-                    the <code>Admin Dashboard</code> for administrators.
-                </p>
+<h3 id="detail-fr-03">FR-03 — Browse Doctors &amp; View Profile</h3>
+<p>A logged-in patient can open the <code>Doctors List</code> view to see doctors who are active in the clinic. By default, doctors marked as inactive are hidden from new patient browsing. The patient can filter the list by choosing a <code>Specialty</code> or typing a search term to match a doctor's name. The system updates the displayed list right away and shows a friendly message if no active doctors match the selected filter or search text. When the patient selects a doctor from the list or search results, the system opens the <code>Doctor Profile</code> view for that doctor. It displays the doctor's full name, assigned <code>Specialty</code>, years of experience, consultation fee, short biography, and consultation hours or working days. From this profile, the patient can jump directly into checking available dates and time slots for that doctor.</p>
 
-                <h3 id="detail-fr-03">FR-03 — User Logout</h3>
-                <p>
-                    Any user who is currently signed in can click the logout
-                    action from the navigation bar or dashboard. When triggered,
-                    the system clears the active user session information and
-                    removes access to role-protected views. The user is then
-                    returned to the <code>Login Page</code>, and pressing the
-                    browser back button should not allow them to act as a
-                    signed-in user without logging in again.
-                </p>
+<h3 id="detail-fr-04">FR-04 — View Available Time Slots</h3>
+<p>On the <code>Doctor Profile</code> or <code>Appointment Booking</code> view, a patient picks a doctor and a calendar date. The system looks up all <code>TimeSlot</code> entries for that doctor on that date and displays each slot's start and end time along with its status (<code>Available</code>, <code>Booked</code>, or <code>Blocked</code>). Only slots with status <code>Available</code> (and in the future) can be selected for booking; <code>Booked</code> and <code>Blocked</code> slots are visibly marked as unavailable so the patient cannot pick them.</p>
 
-                <h3 id="detail-fr-04">FR-04 — Browse &amp; Filter Doctors</h3>
-                <p>
-                    A logged-in patient can open the
-                    <code>Doctors List</code> view to see doctors who are active
-                    in the clinic. By default, doctors marked as inactive are
-                    hidden from new patient browsing. The patient can filter the
-                    list by choosing a <code>Specialty</code> or typing a search
-                    term to match a doctor's name. The system updates the
-                    displayed list right away and shows a friendly message if no
-                    active doctors match the selected filter or search text.
-                </p>
+<h3 id="detail-fr-05">FR-05 — Book Appointment</h3>
+<p>After selecting an <code>Available</code> <code>TimeSlot</code> for a doctor and date, the patient reviews the booking summary and clicks confirm. Before saving, the system runs the conflict checks defined in <a class="req-link" href="#detail-fr-06">FR-06</a>. If no conflict exists, the system creates a new <code>Appointment</code> linked to the patient, doctor, and chosen <code>TimeSlot</code> with status <code>Booked</code>, changes the <code>TimeSlot</code> status from <code>Available</code> to <code>Booked</code>, saves both changes to storage, and shows a booking confirmation message.</p>
 
-                <h3 id="detail-fr-05">FR-05 — View Doctor Profile</h3>
-                <p>
-                    When a patient selects a doctor from the list or search
-                    results, the system opens the
-                    <code>Doctor Profile</code> view for that doctor. It
-                    displays the doctor's full name, assigned
-                    <code>Specialty</code>, years of experience, consultation
-                    fee, short biography, and consultation hours or working
-                    days. From this profile, the patient can jump directly into
-                    checking available dates and time slots for that doctor.
-                </p>
+<h3 id="detail-fr-06">FR-06 — Conflict &amp; Double-Booking Prevention</h3>
+<p>Whenever a booking or reschedule is submitted, the system must check two things before saving: first, that the target <code>TimeSlot</code> still exists, belongs to the chosen doctor, and still has status <code>Available</code>; second, that the same patient does not already have another active <code>Booked</code> appointment on the same date and overlapping time. If either check fails, the system cancels the save operation, keeps existing records unchanged, and shows a clear error message telling the patient why the slot cannot be booked and prompting them to choose another slot.</p>
 
-                <h3 id="detail-fr-06">FR-06 — View Available Time Slots</h3>
-                <p>
-                    On the <code>Doctor Profile</code> or
-                    <code>Appointment Booking</code> view, a patient picks a
-                    doctor and a calendar date. The system looks up all
-                    <code>TimeSlot</code> entries for that doctor on that date
-                    and displays each slot's start and end time along with its
-                    status (<code>Available</code>, <code>Booked</code>, or
-                    <code>Blocked</code>). Only slots with status
-                    <code>Available</code> (and in the future) can be selected
-                    for booking; <code>Booked</code> and
-                    <code>Blocked</code> slots are visibly marked as unavailable
-                    so the patient cannot pick them.
-                </p>
+<h3 id="detail-fr-07">FR-07 — View Patient Appointments</h3>
+<p>A logged-in patient can open <code>My Appointments</code> to view all appointments they have made. The appointments are separated or filterable into <code>Upcoming</code> and <code>Past</code> visits. Each entry shows the doctor's name, specialty, appointment date, time slot, and current status (such as <code>Booked</code>, <code>Completed</code>, <code>Cancelled</code>, or <code>No-Show</code>) so the patient can easily track what is ahead and what has already happened.</p>
 
-                <h3 id="detail-fr-07">FR-07 — Book Appointment</h3>
-                <p>
-                    After selecting an <code>Available</code>
-                    <code>TimeSlot</code> for a doctor and date, the patient
-                    reviews the booking summary and clicks confirm. Before
-                    saving, the system runs the conflict checks defined in
-                    <a class="req-link" href="#detail-fr-08">FR-08</a>. If no
-                    conflict exists, the system creates a new
-                    <code>Appointment</code> linked to the patient, doctor, and
-                    chosen <code>TimeSlot</code> with status
-                    <code>Booked</code>, changes the
-                    <code>TimeSlot</code> status from <code>Available</code> to
-                    <code>Booked</code>, saves both changes to storage, and
-                    shows a booking confirmation message.
-                </p>
+<h3 id="detail-fr-08">FR-08 — Cancel Appointment</h3>
+<p>From <code>My Appointments</code>, a patient can choose to cancel an appointment that is currently in <code>Booked</code> status and scheduled for the future. The system asks for confirmation (and enforces any cutoff rule if defined in the team's business rules), updates the <code>Appointment</code> status to <code>Cancelled</code>, and sets the linked <code>TimeSlot</code> status back to <code>Available</code> so another patient can book it. Past, completed, cancelled, or no-show appointments cannot be cancelled by the patient.</p>
 
-                <h3 id="detail-fr-08">
-                    FR-08 — Conflict &amp; Double-Booking Prevention
-                </h3>
-                <p>
-                    Whenever a booking or reschedule is submitted, the system
-                    must check two things before saving: first, that the target
-                    <code>TimeSlot</code> still exists, belongs to the chosen
-                    doctor, and still has status <code>Available</code>; second,
-                    that the same patient does not already have another active
-                    <code>Booked</code> appointment on the same date and
-                    overlapping time. If either check fails, the system cancels
-                    the save operation, keeps existing records unchanged, and
-                    shows a clear error message telling the patient why the slot
-                    cannot be booked and prompting them to choose another slot.
-                </p>
+<h3 id="detail-fr-09">FR-09 — Reschedule Appointment</h3>
+<p>A patient with an upcoming <code>Booked</code> appointment can choose to reschedule it to another <code>Available</code> <code>TimeSlot</code>. The patient picks a new date and an open slot, and the system checks for conflicts on the new slot (<a class="req-link" href="#detail-fr-06">FR-06</a>) before making any change. If the new slot is free and valid, the system updates the <code>Appointment</code> to point to the new <code>TimeSlot</code> (keeping status <code>Booked</code>), marks the new slot as <code>Booked</code>, and returns the old <code>TimeSlot</code> to <code>Available</code>. If the new slot is not available, the system blocks the change and keeps the patient's original appointment intact.</p>
 
-                <h3 id="detail-fr-09">FR-09 — View Patient Appointments</h3>
-                <p>
-                    A logged-in patient can open <code>My Appointments</code> to
-                    view all appointments they have made. The appointments are
-                    separated or filterable into <code>Upcoming</code> and
-                    <code>Past</code> visits. Each entry shows the doctor's
-                    name, specialty, appointment date, time slot, and current
-                    status (such as <code>Booked</code>, <code>Completed</code>,
-                    <code>Cancelled</code>, or <code>No-Show</code>) so the
-                    patient can easily track what is ahead and what has already
-                    happened.
-                </p>
+<h3 id="detail-fr-10">FR-10 — View Doctor Daily Schedule</h3>
+<p>When a doctor opens the <code>Doctor Dashboard</code>, the system shows the appointments assigned to that doctor for today or for a date the doctor selects. The list is sorted in chronological order by start time and shows each appointment's time window, patient name, basic visit notes or reason, and current status. Only appointments belonging to the logged-in doctor are shown.</p>
 
-                <h3 id="detail-fr-10">FR-10 — Cancel Appointment</h3>
-                <p>
-                    From <code>My Appointments</code>, a patient can choose to
-                    cancel an appointment that is currently in
-                    <code>Booked</code> status and scheduled for the future. The
-                    system asks for confirmation (and enforces any cutoff rule
-                    if defined in the team's business rules), updates the
-                    <code>Appointment</code> status to <code>Cancelled</code>,
-                    and sets the linked <code>TimeSlot</code> status back to
-                    <code>Available</code> so another patient can book it. Past,
-                    completed, cancelled, or no-show appointments cannot be
-                    cancelled by the patient.
-                </p>
+<h3 id="detail-fr-11">FR-11 — Update Appointment Visit Status</h3>
+<p>On the <code>Doctor Dashboard</code>, a doctor can update the status of a scheduled appointment from <code>Booked</code> to either <code>Completed</code> (when the visit took place) or <code>No-Show</code> (when the patient did not attend). The system saves the updated status immediately so it appears in the doctor's schedule, the patient's past appointments list, and administrator reports. Once marked <code>Completed</code> or <code>No-Show</code>, the visit is treated as finished rather than an open upcoming booking.</p>
 
-                <h3 id="detail-fr-11">FR-11 — Reschedule Appointment</h3>
-                <p>
-                    A patient with an upcoming <code>Booked</code> appointment
-                    can choose to reschedule it to another
-                    <code>Available</code> <code>TimeSlot</code>. The patient
-                    picks a new date and an open slot, and the system checks for
-                    conflicts on the new slot (<a
-                        class="req-link"
-                        href="#detail-fr-08"
-                        >FR-08</a
-                    >) before making any change. If the new slot is free and
-                    valid, the system updates the <code>Appointment</code> to
-                    point to the new <code>TimeSlot</code> (keeping status
-                    <code>Booked</code>), marks the new slot as
-                    <code>Booked</code>, and returns the old
-                    <code>TimeSlot</code> to <code>Available</code>. If the new
-                    slot is not available, the system blocks the change and
-                    keeps the patient's original appointment intact.
-                </p>
+<h3 id="detail-fr-12">FR-12 — Manage Specialties</h3>
+<p>An administrator working in the <code>Admin Dashboard</code> can create a new medical <code>Specialty</code> (such as Cardiology or Dermatology) by entering a specialty name and optional description, or edit the name and description of an existing specialty. The system validates that the specialty name is not blank or duplicated and updates the list immediately so patients and administrators see the current specialties.</p>
 
-                <h3 id="detail-fr-12">FR-12 — View Doctor Daily Schedule</h3>
-                <p>
-                    When a doctor opens the <code>Doctor Dashboard</code>, the
-                    system shows the appointments assigned to that doctor for
-                    today or for a date the doctor selects. The list is sorted
-                    in chronological order by start time and shows each
-                    appointment's time window, patient name, basic visit notes
-                    or reason, and current status. Only appointments belonging
-                    to the logged-in doctor are shown.
-                </p>
+<h3 id="detail-fr-13">FR-13 — Manage Doctor Profiles</h3>
+<p>An administrator can add a new <code>Doctor</code> account with profile details (name, email, specialty, experience years, consultation fee, and bio) or edit an existing doctor's profile information and assigned specialty. An administrator can also deactivate a doctor (or set them as inactive). Deactivating a doctor stops patients from seeing them as available for new bookings while keeping their past appointments and history intact.</p>
 
-                <h3 id="detail-fr-13">
-                    FR-13 — Update Appointment Visit Status
-                </h3>
-                <p>
-                    On the <code>Doctor Dashboard</code>, a doctor can update
-                    the status of a scheduled appointment from
-                    <code>Booked</code> to either <code>Completed</code> (when
-                    the visit took place) or <code>No-Show</code> (when the
-                    patient did not attend). The system saves the updated status
-                    immediately so it appears in the doctor's schedule, the
-                    patient's past appointments list, and administrator reports.
-                    Once marked <code>Completed</code> or <code>No-Show</code>,
-                    the visit is treated as finished rather than an open
-                    upcoming booking.
-                </p>
+<h3 id="detail-fr-14">FR-14 — Manage Doctor Time Slots</h3>
+<p>A doctor (for their own schedule) or an administrator (for any doctor) can create new <code>TimeSlot</code> entries for a chosen date and time range, or mark an unbooked <code>Available</code> slot as <code>Blocked</code> when a doctor is unavailable or the clinic has a closure. The system prevents overlapping slots for the same doctor and does not allow blocking a slot that already has an active <code>Booked</code> appointment without first handling that appointment.</p>
 
-                <h3 id="detail-fr-14">FR-14 — Manage Specialties</h3>
-                <p>
-                    An administrator working in the
-                    <code>Admin Dashboard</code> can create a new medical
-                    <code>Specialty</code> (such as Cardiology or Dermatology)
-                    by entering a specialty name and optional description, or
-                    edit the name and description of an existing specialty. The
-                    system validates that the specialty name is not blank or
-                    duplicated and updates the list immediately so patients and
-                    administrators see the current specialties.
-                </p>
+<h3 id="detail-fr-15">FR-15 — Admin Appointment Oversight</h3>
+<p>An administrator can view all appointments across the clinic and filter them by date, doctor, patient, or status (<code>Booked</code>, <code>Cancelled</code>, <code>Completed</code>, <code>No-Show</code>). If a doctor becomes unavailable or an administrative change is required, the administrator can cancel a <code>Booked</code> appointment, which updates the appointment status to <code>Cancelled</code> and releases its <code>TimeSlot</code> back to <code>Available</code>.</p>
 
-                <h3 id="detail-fr-15">FR-15 — Manage Doctor Profiles</h3>
-                <p>
-                    An administrator can add a new <code>Doctor</code> account
-                    with profile details (name, email, specialty, experience
-                    years, consultation fee, and bio) or edit an existing
-                    doctor's profile information and assigned specialty. An
-                    administrator can also deactivate a doctor (or set them as
-                    inactive). Deactivating a doctor stops patients from seeing
-                    them as available for new bookings while keeping their past
-                    appointments and history intact.
-                </p>
+<h3 id="detail-fr-16">FR-16 — View &amp; Search Patient Records</h3>
+<p>An administrator can view a list of registered <code>Patient</code> accounts and search or filter them by name, email, or phone number. Selecting a patient lets the administrator view their contact details and inspect their appointment history so clinic staff can answer questions or assist with scheduling issues.</p>
 
-                <h3 id="detail-fr-16">FR-16 — Manage Doctor Time Slots</h3>
-                <p>
-                    A doctor (for their own schedule) or an administrator (for
-                    any doctor) can create new <code>TimeSlot</code> entries for
-                    a chosen date and time range, or mark an unbooked
-                    <code>Available</code> slot as <code>Blocked</code> when a
-                    doctor is unavailable or the clinic has a closure. The
-                    system prevents overlapping slots for the same doctor and
-                    does not allow blocking a slot that already has an active
-                    <code>Booked</code> appointment without first handling that
-                    appointment.
-                </p>
+<h2>5. Non-Functional Requirements Overview</h2>
+<p>Click any non-functional requirement ID to view its full plain-text details in Section 6.</p>
+<table>
+<thead><tr><th>ID</th><th>Category</th><th>What It Requires (Plain Language)</th></tr></thead>
+<tbody>
+<tr><td><a class="req-link" href="#detail-nfr-01">NFR-01</a></td><td><strong>Usability &amp; Feedback</strong></td><td>Shows clear confirmations and error messages right away whenever a user acts or submits a form.</td></tr>
+<tr><td><a class="req-link" href="#detail-nfr-02">NFR-02</a></td><td><strong>Responsive Design</strong></td><td>Keeps pages readable and free of awkward horizontal scrolling on both computers and phones.</td></tr>
+<tr><td><a class="req-link" href="#detail-nfr-03">NFR-03</a></td><td><strong>Data Integrity &amp; Persistence</strong></td><td>Saves changes in browser storage so refreshing the page does not wipe out bookings or edits.</td></tr>
+<tr><td><a class="req-link" href="#detail-nfr-04">NFR-04</a></td><td><strong>Access Control &amp; Naming Consistency</strong></td><td>Keeps roles in their proper views and uses consistent names across the SRS, diagrams, and pages.</td></tr>
+</tbody></table>
 
-                <h3 id="detail-fr-17">FR-17 — Admin Appointment Oversight</h3>
-                <p>
-                    An administrator can view all appointments across the clinic
-                    and filter them by date, doctor, patient, or status
-                    (<code>Booked</code>, <code>Cancelled</code>,
-                    <code>Completed</code>, <code>No-Show</code>). If a doctor
-                    becomes unavailable or an administrative change is required,
-                    the administrator can cancel a
-                    <code>Booked</code> appointment, which updates the
-                    appointment status to <code>Cancelled</code> and releases
-                    its <code>TimeSlot</code> back to <code>Available</code>.
-                </p>
+<h2>6. Detailed Non-Functional Requirements</h2>
+<h3 id="detail-nfr-01">NFR-01 — Usability &amp; Feedback</h3>
+<p>Every action a user takes—such as registering, logging in, booking a slot, cancelling or rescheduling an appointment, updating a visit status, or saving admin changes—must produce visible feedback on screen right away (within 1 second). Validation errors must point out missing or invalid inputs clearly, and conflict alerts must explain why a slot could not be taken.</p>
 
-                <h3 id="detail-fr-18">
-                    FR-18 — View &amp; Search Patient Records
-                </h3>
-                <p>
-                    An administrator can view a list of registered
-                    <code>Patient</code> accounts and search or filter them by
-                    name, email, or phone number. Selecting a patient lets the
-                    administrator view their contact details and inspect their
-                    appointment history so clinic staff can answer questions or
-                    assist with scheduling issues.
-                </p>
+<h3 id="detail-nfr-02">NFR-02 — Responsive Design</h3>
+<p>All front-end pages must adapt smoothly to both desktop screens (1024px wide and above) and mobile screens (375px wide and above). Navigation menus, tables, slot grids, and forms should stack or scroll cleanly inside their containers without breaking page layout or forcing horizontal scrolling across the whole page.</p>
 
-                <h2>5. Non-Functional Requirements Overview</h2>
-                <p>
-                    Click any non-functional requirement ID to view its full
-                    plain-text details in Section 6.
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Category</th>
-                            <th>What It Requires (Plain Language)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-nfr-01"
-                                    >NFR-01</a
-                                >
-                            </td>
-                            <td><strong>Usability &amp; Feedback</strong></td>
-                            <td>
-                                Shows clear confirmations and error messages
-                                right away whenever a user acts or submits a
-                                form.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-nfr-02"
-                                    >NFR-02</a
-                                >
-                            </td>
-                            <td><strong>Responsive Design</strong></td>
-                            <td>
-                                Keeps pages readable and free of awkward
-                                horizontal scrolling on both computers and
-                                phones.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-nfr-03"
-                                    >NFR-03</a
-                                >
-                            </td>
-                            <td>
-                                <strong
-                                    >Data Integrity &amp; Persistence</strong
-                                >
-                            </td>
-                            <td>
-                                Saves changes in browser storage so refreshing
-                                the page does not wipe out bookings or edits.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a class="req-link" href="#detail-nfr-04"
-                                    >NFR-04</a
-                                >
-                            </td>
-                            <td>
-                                <strong
-                                    >Access Control &amp; Consistency</strong
-                                >
-                            </td>
-                            <td>
-                                Keeps roles in their proper views and uses
-                                consistent names across the SRS, diagrams, and
-                                pages.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<h3 id="detail-nfr-03">NFR-03 — Data Integrity &amp; Persistence</h3>
+<p>When the app starts for the first time, it loads clean sample seed data (specialties, doctors, time slots, patients, and appointments) into browser storage (such as <code>localStorage</code>). Any new registration, booking, cancellation, reschedule, status update, or admin change updates that stored data so changes stay intact across page refreshes until reset.</p>
 
-                <h2>6. Detailed Non-Functional Requirements</h2>
+<h3 id="detail-nfr-04">NFR-04 — Access Control &amp; Naming Consistency</h3>
+<p>Users who are not logged in must be sent to the <code>Login Page</code> rather than accessing role dashboards directly, and a logged-in user must only see and perform actions allowed for their role. In addition, class names, slot/appointment statuses, and page names must stay identical across this SRS, all SAD 1 diagrams, and the front-end code so the team avoids confusion.</p>
 
-                <h3 id="detail-nfr-01">NFR-01 — Usability &amp; Feedback</h3>
-                <p>
-                    Every action a user takes—such as registering, logging in,
-                    booking a slot, cancelling or rescheduling an appointment,
-                    updating a visit status, or saving admin changes—must
-                    produce visible feedback on screen right away (within 1
-                    second). Validation errors must point out missing or invalid
-                    inputs clearly, and conflict alerts must explain why a slot
-                    could not be taken.
-                </p>
+<h2>7. Domain Rules &amp; Data States</h2>
+<h3><code>TimeSlot</code> Statuses</h3>
+<ul>
+<li><code>Available</code>: Open and eligible to be booked.</li>
+<li><code>Booked</code>: Reserved by an active (<code>Booked</code>) appointment.</li>
+<li><code>Blocked</code>: Unavailable due to clinic closure, doctor leave, or manual blocking.</li>
+</ul>
+<h3><code>Appointment</code> Statuses</h3>
+<ul>
+<li><code>Booked</code>: Active confirmed appointment.</li>
+<li><code>Cancelled</code>: Cancelled by the patient or administrator; releases the associated <code>TimeSlot</code> to <code>Available</code> if still in the future.</li>
+<li><code>Completed</code>: Visit completed as recorded by the doctor.</li>
+<li><code>No-Show</code>: Patient missed the scheduled appointment as recorded by the doctor.</li>
+</ul>
+<h3>Core Domain Classes &amp; Business Rules</h3>
+<ul>
+<li>Core classes: <code>Patient</code>, <code>Doctor</code>, <code>Specialty</code>, <code>Appointment</code>, <code>TimeSlot</code>, and <code>Administrator</code> (plus <code>User</code> if modeling shared login/profile attributes).</li>
+<li>A <code>TimeSlot</code> can hold at most one active (<code>Booked</code>) <code>Appointment</code> at any time.</li>
+<li>A <code>Patient</code> cannot hold two overlapping <code>Booked</code> appointments on the same date and start time.</li>
+<li>Rescheduling checks the target slot first so an existing booking is not lost if a conflict occurs.</li>
+<li>Deactivating a <code>Doctor</code> prevents new bookings while keeping existing historical records intact.</li>
+</ul>
 
-                <h3 id="detail-nfr-02">NFR-02 — Responsive Design</h3>
-                <p>
-                    All front-end pages must adapt smoothly to both desktop
-                    screens (1024px wide and above) and mobile screens (375px
-                    wide and above). Navigation menus, tables, slot grids, and
-                    forms should stack or scroll cleanly inside their containers
-                    without breaking page layout or forcing horizontal scrolling
-                    across the whole page.
-                </p>
+<h2>8. Frontend Page Mapping</h2>
+<table>
+<thead><tr><th>Frontend Page</th><th>Primary Role(s)</th><th>Mapped Requirements</th></tr></thead>
+<tbody>
+<tr><td><strong>Login Page</strong></td><td>Visitor / All Roles</td><td><a class="req-link" href="#detail-fr-01">FR-01</a>, <a class="req-link" href="#detail-fr-02">FR-02</a>, <a class="req-link" href="#detail-nfr-04">NFR-04</a></td></tr>
+<tr><td><strong>Patient Dashboard</strong></td><td>Patient</td><td><a class="req-link" href="#detail-fr-03">FR-03</a>, <a class="req-link" href="#detail-fr-07">FR-07</a>, <a class="req-link" href="#detail-nfr-02">NFR-02</a>, <a class="req-link" href="#detail-nfr-04">NFR-04</a></td></tr>
+<tr><td><strong>Doctors List</strong></td><td>Patient</td><td><a class="req-link" href="#detail-fr-03">FR-03</a>, <a class="req-link" href="#detail-nfr-02">NFR-02</a></td></tr>
+<tr><td><strong>Doctor Profile</strong></td><td>Patient</td><td><a class="req-link" href="#detail-fr-03">FR-03</a>, <a class="req-link" href="#detail-fr-04">FR-04</a>, <a class="req-link" href="#detail-nfr-02">NFR-02</a></td></tr>
+<tr><td><strong>Appointment Booking</strong></td><td>Patient</td><td><a class="req-link" href="#detail-fr-04">FR-04</a>, <a class="req-link" href="#detail-fr-05">FR-05</a>, <a class="req-link" href="#detail-fr-06">FR-06</a>, <a class="req-link" href="#detail-fr-09">FR-09</a>, <a class="req-link" href="#detail-nfr-01">NFR-01</a></td></tr>
+<tr><td><strong>My Appointments</strong></td><td>Patient</td><td><a class="req-link" href="#detail-fr-07">FR-07</a>, <a class="req-link" href="#detail-fr-08">FR-08</a>, <a class="req-link" href="#detail-fr-09">FR-09</a>, <a class="req-link" href="#detail-nfr-01">NFR-01</a></td></tr>
+<tr><td><strong>Doctor Dashboard</strong></td><td>Doctor</td><td><a class="req-link" href="#detail-fr-10">FR-10</a>, <a class="req-link" href="#detail-fr-11">FR-11</a>, <a class="req-link" href="#detail-fr-14">FR-14</a>, <a class="req-link" href="#detail-nfr-02">NFR-02</a></td></tr>
+<tr><td><strong>Admin Dashboard</strong></td><td>Administrator</td><td><a class="req-link" href="#detail-fr-12">FR-12</a>, <a class="req-link" href="#detail-fr-13">FR-13</a>, <a class="req-link" href="#detail-fr-14">FR-14</a>, <a class="req-link" href="#detail-fr-15">FR-15</a>, <a class="req-link" href="#detail-fr-16">FR-16</a>, <a class="req-link" href="#detail-nfr-02">NFR-02</a></td></tr>
+</tbody></table>
 
-                <h3 id="detail-nfr-03">
-                    NFR-03 — Data Integrity &amp; Persistence
-                </h3>
-                <p>
-                    When the app starts for the first time, it loads clean
-                    sample seed data (specialties, doctors, time slots,
-                    patients, and appointments) into browser storage (such as
-                    <code>localStorage</code>). Any new registration, booking,
-                    cancellation, reschedule, status update, or admin change
-                    updates that stored data so changes stay intact across page
-                    refreshes until reset.
-                </p>
-
-                <h3 id="detail-nfr-04">
-                    NFR-04 — Access Control &amp; Naming Consistency
-                </h3>
-                <p>
-                    Users who are not logged in must be sent to the
-                    <code>Login Page</code> rather than accessing role
-                    dashboards directly, and a logged-in user must only see and
-                    perform actions allowed for their role. In addition, class
-                    names, slot/appointment statuses, and page names must stay
-                    identical across this SRS, all SAD 1 diagrams, and the
-                    front-end code so the team avoids confusion.
-                </p>
-
-                <h2>7. Domain Rules &amp; Data States</h2>
-                <h3><code>TimeSlot</code> Statuses</h3>
-                <ul>
-                    <li>
-                        <code>Available</code>: Open and eligible to be booked.
-                    </li>
-                    <li>
-                        <code>Booked</code>: Reserved by an active
-                        (<code>Booked</code>) appointment.
-                    </li>
-                    <li>
-                        <code>Blocked</code>: Unavailable due to clinic closure,
-                        doctor leave, or manual blocking.
-                    </li>
-                </ul>
-
-                <h3><code>Appointment</code> Statuses</h3>
-                <ul>
-                    <li><code>Booked</code>: Active confirmed appointment.</li>
-                    <li>
-                        <code>Cancelled</code>: Cancelled by the patient or
-                        administrator; releases the associated
-                        <code>TimeSlot</code> to <code>Available</code> if still
-                        in the future.
-                    </li>
-                    <li>
-                        <code>Completed</code>: Visit completed as recorded by
-                        the doctor.
-                    </li>
-                    <li>
-                        <code>No-Show</code>: Patient missed the scheduled
-                        appointment as recorded by the doctor.
-                    </li>
-                </ul>
-
-                <h3>Core Domain Classes &amp; Business Rules</h3>
-                <ul>
-                    <li>
-                        Core classes: <code>Patient</code>, <code>Doctor</code>,
-                        <code>Specialty</code>, <code>Appointment</code>,
-                        <code>TimeSlot</code>, and
-                        <code>Administrator</code> (plus <code>User</code> if
-                        modeling shared login/profile attributes).
-                    </li>
-                    <li>
-                        A <code>TimeSlot</code> can hold at most one active
-                        (<code>Booked</code>) <code>Appointment</code> at any
-                        time.
-                    </li>
-                    <li>
-                        A <code>Patient</code> cannot hold two overlapping
-                        <code>Booked</code> appointments on the same date and
-                        start time.
-                    </li>
-                    <li>
-                        Rescheduling checks the target slot first so an existing
-                        booking is not lost if a conflict occurs.
-                    </li>
-                    <li>
-                        Deactivating a <code>Doctor</code> prevents new bookings
-                        while keeping existing historical records intact.
-                    </li>
-                </ul>
-
-                <h2>8. Frontend Page Mapping</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Frontend Page</th>
-                            <th>Primary Role(s)</th>
-                            <th>Mapped Requirements</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Login Page</strong></td>
-                            <td>Visitor / All Roles</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-01"
-                                    >FR-01</a
-                                >,
-                                <a class="req-link" href="#detail-fr-02"
-                                    >FR-02</a
-                                >,
-                                <a class="req-link" href="#detail-fr-03"
-                                    >FR-03</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-04"
-                                    >NFR-04</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Patient Dashboard</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-03"
-                                    >FR-03</a
-                                >,
-                                <a class="req-link" href="#detail-fr-04"
-                                    >FR-04</a
-                                >,
-                                <a class="req-link" href="#detail-fr-09"
-                                    >FR-09</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-02"
-                                    >NFR-02</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-04"
-                                    >NFR-04</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Doctors List</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-04"
-                                    >FR-04</a
-                                >,
-                                <a class="req-link" href="#detail-fr-05"
-                                    >FR-05</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-02"
-                                    >NFR-02</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Doctor Profile</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-05"
-                                    >FR-05</a
-                                >,
-                                <a class="req-link" href="#detail-fr-06"
-                                    >FR-06</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-02"
-                                    >NFR-02</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Appointment Booking</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-06"
-                                    >FR-06</a
-                                >,
-                                <a class="req-link" href="#detail-fr-07"
-                                    >FR-07</a
-                                >,
-                                <a class="req-link" href="#detail-fr-08"
-                                    >FR-08</a
-                                >,
-                                <a class="req-link" href="#detail-fr-11"
-                                    >FR-11</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-01"
-                                    >NFR-01</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>My Appointments</strong></td>
-                            <td>Patient</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-09"
-                                    >FR-09</a
-                                >,
-                                <a class="req-link" href="#detail-fr-10"
-                                    >FR-10</a
-                                >,
-                                <a class="req-link" href="#detail-fr-11"
-                                    >FR-11</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-01"
-                                    >NFR-01</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Doctor Dashboard</strong></td>
-                            <td>Doctor</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-03"
-                                    >FR-03</a
-                                >,
-                                <a class="req-link" href="#detail-fr-12"
-                                    >FR-12</a
-                                >,
-                                <a class="req-link" href="#detail-fr-13"
-                                    >FR-13</a
-                                >,
-                                <a class="req-link" href="#detail-fr-16"
-                                    >FR-16</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-02"
-                                    >NFR-02</a
-                                >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Admin Dashboard</strong></td>
-                            <td>Administrator</td>
-                            <td>
-                                <a class="req-link" href="#detail-fr-03"
-                                    >FR-03</a
-                                >,
-                                <a class="req-link" href="#detail-fr-14"
-                                    >FR-14</a
-                                >,
-                                <a class="req-link" href="#detail-fr-15"
-                                    >FR-15</a
-                                >,
-                                <a class="req-link" href="#detail-fr-16"
-                                    >FR-16</a
-                                >,
-                                <a class="req-link" href="#detail-fr-17"
-                                    >FR-17</a
-                                >,
-                                <a class="req-link" href="#detail-fr-18"
-                                    >FR-18</a
-                                >,
-                                <a class="req-link" href="#detail-nfr-02"
-                                    >NFR-02</a
-                                >
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </main>
-        </div>
-
-        <script>
+<h2>9. Requirements Selected for Diagrams</h2>
+<p>The ten requirements below cover the full booking scenario and all three actors, and are the ones modeled in the SAD 1 diagrams.</p>
+<table>
+<thead><tr><th>#</th><th>ID</th><th>Requirement Name</th><th>Actor(s)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><a class="req-link" href="#detail-fr-01">FR-01</a></td><td><strong>Patient Registration</strong></td><td>Patient</td></tr>
+<tr><td>2</td><td><a class="req-link" href="#detail-fr-02">FR-02</a></td><td><strong>Role-Based Login</strong></td><td>Patient, Doctor, Admin</td></tr>
+<tr><td>3</td><td><a class="req-link" href="#detail-fr-03">FR-03</a></td><td><strong>Browse Doctors &amp; View Profile</strong></td><td>Patient</td></tr>
+<tr><td>4</td><td><a class="req-link" href="#detail-fr-04">FR-04</a></td><td><strong>View Available Time Slots</strong></td><td>Patient</td></tr>
+<tr><td>5</td><td><a class="req-link" href="#detail-fr-05">FR-05</a></td><td><strong>Book Appointment</strong></td><td>Patient</td></tr>
+<tr><td>6</td><td><a class="req-link" href="#detail-fr-06">FR-06</a></td><td><strong>Conflict &amp; Double-Booking Prevention</strong></td><td>System</td></tr>
+<tr><td>7</td><td><a class="req-link" href="#detail-fr-08">FR-08</a></td><td><strong>Cancel Appointment</strong></td><td>Patient</td></tr>
+<tr><td>8</td><td><a class="req-link" href="#detail-fr-09">FR-09</a></td><td><strong>Reschedule Appointment</strong></td><td>Patient</td></tr>
+<tr><td>9</td><td><a class="req-link" href="#detail-fr-11">FR-11</a></td><td><strong>Update Appointment Visit Status</strong></td><td>Doctor</td></tr>
+<tr><td>10</td><td><a class="req-link" href="#detail-fr-14">FR-14</a></td><td><strong>Manage Doctor Time Slots</strong></td><td>Doctor, Administrator</td></tr>
+</tbody></table>
+</main>
+</div>
+<script>
             const toc = document.getElementById("toc");
             const headings = Array.from(document.querySelectorAll("main h2"));
             const links = [];
@@ -1286,11 +353,7 @@
                 entries => {
                     const visible = entries
                         .filter(entry => entry.isIntersecting)
-                        .sort(
-                            (a, b) =>
-                                a.boundingClientRect.top -
-                                b.boundingClientRect.top,
-                        );
+                        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
 
                     if (visible.length > 0) {
                         setActive(visible[0].target.id);
@@ -1305,8 +368,7 @@
                         }
                     }
                     if (
-                        window.innerHeight + window.scrollY >=
-                            document.body.scrollHeight - 40 &&
+                        window.innerHeight + window.scrollY >= document.body.scrollHeight - 40 &&
                         headings.length > 0
                     ) {
                         currentId = headings[headings.length - 1].id;
@@ -1315,10 +377,7 @@
                         setActive(currentId);
                     }
                 },
-                {
-                    rootMargin: "-10% 0px -75% 0px",
-                    threshold: 0,
-                },
+                { rootMargin: "-10% 0px -75% 0px", threshold: 0 },
             );
 
             headings.forEach(h => observer.observe(h));
@@ -1327,8 +386,7 @@
                 "scroll",
                 () => {
                     if (
-                        window.innerHeight + window.scrollY >=
-                            document.body.scrollHeight - 24 &&
+                        window.innerHeight + window.scrollY >= document.body.scrollHeight - 24 &&
                         headings.length > 0
                     ) {
                         setActive(headings[headings.length - 1].id);
@@ -1336,6 +394,6 @@
                 },
                 { passive: true },
             );
-        </script>
-    </body>
+</script>
+</body>
 </html>
